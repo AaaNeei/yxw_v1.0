@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WEB01</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css" type="text/css"/>
+    <script src="/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/js/yxw/kaptcha.js" type="text/javascript"></script>
+    <script src="/js/yxw/validate.js" type="text/javascript"></script>
+    <script src="/js/yxw/login.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+
+<div class="container">
+
+    <div th:include="top::commonTop"></div>
+    <!--body-->
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-8 column">
+                <div class="row clearfix">
+                    <div class="col-md-6 column">
+                        <img alt="140x140"
+                             src="http://ibootstrap-file.b0.upaiyun.com/lorempixel.com/140/140/default.jpg"
+                             class="img-circle"/><img alt="140x140"
+                                                      src="http://ibootstrap-file.b0.upaiyun.com/lorempixel.com/140/140/default.jpg"
+                                                      class="img-thumbnail"/>
+                    </div>
+                    <div class="col-md-6 column">
+                        <dl>
+                            <dt>
+                                Description lists
+                            </dt>
+                            <dd>
+                                A description list is perfect for defining terms.
+                            </dd>
+                            <dt>
+                                Euismod
+                            </dt>
+                            <dd>
+                                Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+                            </dd>
+                            <dd>
+                                Donec id elit non mi porta gravida at eget metus.
+                            </dd>
+                            <dt>
+                                Malesuada porta
+                            </dt>
+                            <dd>
+                                Etiam porta sem malesuada magna mollis euismod.
+                            </dd>
+                            <dt>
+                                Felis euismod semper eget lacinia
+                            </dt>
+                            <dd>
+                                Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                                massa justo sit amet risus.
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 column">
+                <br>
+                <br><br>
+                <form class="form-horizontal" role="form" method="post" action="/student/loginIn">
+                    <div class="form-group">
+                        <label for="stuUsername" class="col-sm-3 control-label">用户名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="stuUsername" name="stuUsername"/>
+                        </div>
+                        <span class="col-sm-3" id="stuUsername_msg" style="color: red;size: auto"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="stuPassword" class="col-sm-3 control-label">密 码</label>
+                        <div class="col-sm-6">
+                            <input type="password" class="form-control" id="stuPassword" name="stuPassword"/>
+                        </div>
+                        <span class="col-sm-3" id="stuPassword_msg" style="color: red;size: auto"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="stuPassword" class="col-sm-3 control-label">验证码</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="kaptcha" name="kaptcha"
+                                   placeholder="请输入验证码" style="color: #000000;"/>
+                            <img style="cursor: pointer;padding-top: 10px;" src="/kaptcha.jpg" width="100"
+                                 id="kaptchaImage" title="看不清，点击换一张"/>
+                            <span style="color: #00a0de;cursor: pointer;padding-top: 10px;"
+                                  id="kaptchaImage2">点击换张</span>
+                        </div>
+                        <span class="col-sm-3" id="kaptcha_msg" style="color: red;size: auto"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-4">
+                            <button type="submit" class="btn btn-default" id="user_insert_btn">登录</button>
+                        </div>
+                        <div class="checkbox col-sm-offset-2 col-sm-4">
+                            <input type="checkbox" id="rememberMe" name="rememberMe"/>记住我
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div th:include="footer::commonFooter"></div>
+</div>
+</body>
+
+</html>
+
+<!--
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet"
+          href="webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/js/validate.js"></script>
+    <script type="text/javascript" src="/js/kaptcha.js"></script>
+    <script type="text/javascript" src="/js/login.js"></script>
+    <meta charset="UTF-8"/>
+    <title>登录页面</title>
+</head>
+<body>
+
+<p id="prompt"></p>
+
+<p>账号：<input type="text"  id="name" name="name"/></p>
+<p>密码：<input type="password"  id="password" name="password"/></p>
+<p></p>
+&lt;!&ndash; begin:验证码 &ndash;&gt;
+<input type="text" class="form-controlA" id="kaptcha" name="kaptcha"
+       placeholder="请输入验证码" style="color: #000000;" />
+<span class="help-block"></span>
+<img src="kaptcha.jpg" width="200" id="kaptchaImage" title="看不清，点击换一张" /> <small>看不清，点击换一张</small>
+&lt;!&ndash; end:验证码 &ndash;&gt;
+<p></p>
+<p>
+    <button type="button" class="btn btn-primary" id="user_insert_btn">登录</button>
+</p>
+
+&lt;!&ndash; begin:注册功能 &ndash;&gt;
+<p></p><p><a th:href="@{/index} ">点击前往注册吧！</a></p>
+
+</body>
+</html>
+-->
