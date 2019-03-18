@@ -1,29 +1,35 @@
+/*
 package com.yxw.sms.controller;
 
-import com.yxw.sms.service.SendMessageService;
+
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.yxw.service.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+*/
 /**
  * @Author:阿倪
  * @Date: 2019/3/16 10:08
  * @Description:
  * @return:
  * @throws:
- */
+ *//*
+
 @Controller
 @RequestMapping("/yxw")
 public class SendMessageController {
 
-    @Autowired
-    private SendMessageService sendMessageService;
+    @Reference
+    private SmsService smsService;
 
     @RequestMapping("/sendMessage")
     public String sendMessage(String sendPhoneNum) {
-        String message = sendMessageService.sendMessage(sendPhoneNum);
+        String message = smsService.sendMessage(sendPhoneNum);
         return message;
     }
 
 
 }
+*/

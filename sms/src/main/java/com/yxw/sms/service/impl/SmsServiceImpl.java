@@ -1,11 +1,13 @@
 package com.yxw.sms.service.impl;
 
-import com.yxw.sms.service.SendMessageService;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.yxw.sms.service.SmsService;
 import com.yxw.sms.util.SendMessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,8 +18,8 @@ import java.util.concurrent.TimeUnit;
  * @return:
  * @throws:
  */
-@Service("sendMessageService")
-public class SendMessageServiceImpl implements SendMessageService {
+@Service
+public class SmsServiceImpl implements SmsService {
     @Autowired
     private RedisTemplate redisTemplate;
     @Value("${yxw.sms.timeout}")
@@ -40,7 +42,6 @@ public class SendMessageServiceImpl implements SendMessageService {
             redisTemplate.opsForValue().set("yxw_sms_code:" + sendPhoneNum, code);
             redisTemplate.expire("yxw_sms_code:" + sendPhoneNum, timeout, TimeUnit.MINUTES);
             System.out.println("已发送至：" + sendPhoneNum + "，验证码：" + redisTemplate.opsForValue().get("yxw_sms_code:" + sendPhoneNum));
-
             return "success";
         } else {
             String message = SendMessageUtil.getMessage(resultCode);
@@ -49,4 +50,6 @@ public class SendMessageServiceImpl implements SendMessageService {
 
 
     }
+
+
 }
