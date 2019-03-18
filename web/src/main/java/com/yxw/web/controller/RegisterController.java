@@ -12,6 +12,7 @@ import com.yxw.web.service.StudentService;
 import com.yxw.web.utils.security.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -47,7 +48,8 @@ public class RegisterController {
     private StudentService studentService;
     @Value("${yxw.environment:dev}")
     private String environment;
-
+    @Autowired
+    private RedisTemplate redisTemplate;
     @Autowired
     private RegisterService registerService;
 
@@ -62,6 +64,8 @@ public class RegisterController {
     }
 
     /**
+     * 发送短信
+     *
      * @param
      * @return
      */
@@ -81,7 +85,7 @@ public class RegisterController {
     }
 
     /**
-     * @param provinceNum 异步发送短信
+     * @param provinceNum
      * @return
      */
     @ResponseBody
@@ -94,14 +98,15 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/registerIn", method = RequestMethod.POST)
-    public String register(Student student) {
+    public String register(Model model, Student student, @RequestParam(value = "stuMobileCode") String stuMobileCode) {
         System.out.print("----------注册数据提交");
-
-
+        String mobileCode = (String) redisTemplate.opsForValue().get("yxw_sms_code_dev:" + student.getStuMobile());
+        if (!StringUtils.pathEquals(stuMobileCode, mobileCode)) {
+            model.addAttribute("msg", "手机验证码不一致!");
+            return "/error";
+        }
         student.setStuPassword(MD5Util.encode(student.getStuPassword()));
         studentService.addUser(student);
-
-
         return "/login";
     }
 

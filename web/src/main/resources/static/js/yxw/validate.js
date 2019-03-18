@@ -31,6 +31,10 @@ function validate_add_form_mobile() {
 // 验证用户名
 function validate_add_form_username() {
     var name = $("#stuUsername").val();
+    if(name==''||name==null){
+        show_validate_msg("#stuUsername", "error", "用户名不能为空");
+        return false;
+    }
     var reg_name = /(^[a-zA-Z0-9_-]{6,19}$)|(^[\u2E80-\u9FFF]{2,5})/;
     if (!reg_name.test(name)) {
         show_validate_msg("#stuUsername", "error", "用户名必须是2-5位中文或6-19位英文和数字的组合");

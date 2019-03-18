@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,14 +29,16 @@ public class NewKaptchaController {
      */
 
     private Producer captchaProducer = null;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Autowired
-    public void setCaptchaProducer(Producer captchaProducer){
+    public void setCaptchaProducer(Producer captchaProducer) {
         this.captchaProducer = captchaProducer;
     }
 
     @RequestMapping("/kaptcha.jpg")
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // Set to expire far in the past.
         response.setDateHeader("Expires", 0);
         // Set standard HTTP/1.1 no-cache headers.
@@ -50,9 +53,10 @@ public class NewKaptchaController {
 
         // create the text for the image
         String capText = captchaProducer.createText();
-
+        //存入缓存
+        redisTemplate.opsForValue().set(Constants.KAPTCHA_SESSION_KEY, capText);
         // store the text in the session
-        request.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+        //request.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
 
         // create the image with the text
         BufferedImage bi = captchaProducer.createImage(capText);

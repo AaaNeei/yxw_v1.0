@@ -64,7 +64,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			userInfo = sysUserService.getUserInfoByUserID(2);
 			session.setAttribute(Constants.SessionKey.USER, userInfo);
 		}*/
-        if (student == null) {
+       /* if (student == null) {
 
 
             String requestType = request.getHeader("X-Requested-With");
@@ -78,7 +78,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             }
             return false;
         }
-        log.info("用户已登录,userName:" + student.getStuUsername());
+        log.info("用户已登录,userName:" + student.getStuUsername());*/
         return true;
     }
 
