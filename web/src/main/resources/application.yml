@@ -12,10 +12,19 @@ server:
         request-attributes-enabled: false
         rotate: true
 
+#消费者名称
+dubbo:
+    application:
+      name: dubbo_yxw_web
+#需要使用到提供者服务的包路径
+    scan:
+      basePackages: com.yxw.web.controller
+#注册中心地址
+    registry:
+      address: zookeeper://127.0.0.1:2181
 
 
 spring:
-
     mvc:
       favicon:
         enabled: false
@@ -78,3 +87,4 @@ pagehelper:
 yxw:
     security:
           salt: "yxw$_AaNeei@1995*02!01"
+    environment: dev

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  * @throws:
  */
 @Controller
-@RequestMapping("/student")
+@RequestMapping("/yxw")
 public class LoginController {
 
     @Autowired

@@ -74,7 +74,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                 return false;
             } else {
                 log.info("尚未登录，跳转到登录界面");
-                response.sendRedirect(request.getContextPath() + "/student/login");
+                response.sendRedirect(request.getContextPath() + "/yxw/login");
             }
             return false;
         }
@@ -95,16 +95,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //设置不进行登录拦截的路径：登录注册和验证码
         notLoginPaths.add("/**");
         notLoginPaths.add("/top");
-        notLoginPaths.add("/student/index");
+        notLoginPaths.add("/yxw/index");
         notLoginPaths.add("/footer");
-        notLoginPaths.add("/student/login");
-        notLoginPaths.add("/student/loginIn");
-        notLoginPaths.add("/student/register");
+        notLoginPaths.add("/yxw/login");
+        notLoginPaths.add("/yxw/loginIn");
+        notLoginPaths.add("/yxw/register");
         notLoginPaths.add("/kaptcha.jpg");
-        notLoginPaths.add("/student/loginOut");
-        notLoginPaths.add("/student/registerIn");
-        notLoginPaths.add("/student/register_getSchoolByProvinceNum.json");
-        notLoginPaths.add("/student/ajaxCheckStuUsername.json");
+        notLoginPaths.add("/yxw/loginOut");
+        notLoginPaths.add("/yxw/registerIn");
+        notLoginPaths.add("/yxw/register_getSchoolByProvinceNum.json");
+        notLoginPaths.add("/yxw/ajaxCheckStuUsername.json");
+        notLoginPaths.add("/yxw/ajaxCheckMobileCode.json");
         //notLoginPaths.add("/loginTimeout");
 
         if (notLoginPaths.contains(path)) {

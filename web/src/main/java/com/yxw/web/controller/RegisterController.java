@@ -1,25 +1,28 @@
 package com.yxw.web.controller;
 
+import com.yxw.web.entity.MobileCode;
+import com.yxw.sms.service.SmsService;
 import com.yxw.web.entity.Province;
 import com.yxw.web.entity.School;
 import com.yxw.web.entity.Student;
 import com.yxw.web.service.ProvinceService;
+import com.yxw.web.service.RegisterService;
 import com.yxw.web.service.SchoolService;
 import com.yxw.web.service.StudentService;
 import com.yxw.web.utils.security.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.alibaba.dubbo.config.annotation.Reference;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author:阿倪
@@ -29,9 +32,11 @@ import java.util.Map;
  * @throws:
  */
 @Controller
-@RequestMapping("/student")
+@RequestMapping("/yxw")
 public class RegisterController {
 
+    @Reference
+    private SmsService smsService;
 
     @Autowired
     private ProvinceService provinceService;
@@ -40,6 +45,11 @@ public class RegisterController {
     private SchoolService schoolService;
     @Autowired
     private StudentService studentService;
+    @Value("${yxw.environment:dev}")
+    private String environment;
+
+    @Autowired
+    private RegisterService registerService;
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String registerView(Model model, HttpServletRequest request) {
@@ -52,12 +62,31 @@ public class RegisterController {
     }
 
     /**
-     * @param provinceNum 异步获取省份对应的高校信息
+     * @param
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "register_getSchoolByProvinceNum.json", method = RequestMethod.GET)
-    public List<School> getSchoolByProvinceNum(@RequestParam(value = "provinceNum") Integer provinceNum) {
+    @RequestMapping(value = "/ajaxCheckMobileCode.json", method = RequestMethod.POST)
+    public String getSchoolByProvinceNum(@RequestParam(value = "stuMobile") String stuMobile) {
+        //调用 中国网建sms平台 真实发送短信
+        String message = null;
+        if (StringUtils.pathEquals("pro", environment)) {
+            message = smsService.sendMessage(stuMobile);
+        } else if (StringUtils.pathEquals("dev", environment)) {
+            //开发环境 不发送短信只存数据库  缓存
+            message = registerService.sendMessageDev(stuMobile);
+        }
+
+        return message;
+    }
+
+    /**
+     * @param provinceNum 异步发送短信
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/register_getSchoolByProvinceNum.json", method = RequestMethod.GET)
+    public List<School> ajaxCheckMobileCode(@RequestParam(value = "provinceNum") Integer provinceNum) {
 
         List<School> schoolList = schoolService.getSchoolByProvinceNum(provinceNum);
 
@@ -67,6 +96,8 @@ public class RegisterController {
     @RequestMapping(value = "/registerIn", method = RequestMethod.POST)
     public String register(Student student) {
         System.out.print("----------注册数据提交");
+
+
         student.setStuPassword(MD5Util.encode(student.getStuPassword()));
         studentService.addUser(student);
 
@@ -81,7 +112,6 @@ public class RegisterController {
         if (student != null) {
             return "1";
         }
-
         return "0";
     }
 

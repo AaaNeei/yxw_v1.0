@@ -27,12 +27,12 @@
         </div>
         <div class="col-md-2" style="padding-top:20px;">
             <ol class="list-inline" th:if="${login == null}">
-                <li><a href="/student/login">登录</a></li>
-                <li><a href="/student/register">注册</a></li>
+                <li><a href="/yxw/login">登录</a></li>
+                <li><a href="/yxw/register">注册</a></li>
             </ol>
             <ol class="list-inline" th:if="${login != null}">
                 <li>欢迎:<span th:text="${login.stuUsername}"></span></li>
-                <li><a href="/student/loginOut">退出</a></li>
+                <li><a href="/yxw/loginOut">退出</a></li>
             </ol>
         </div>
     </div>
@@ -53,15 +53,15 @@
                             data-target="#bs-example-navbar-collapse-1"><span
                             class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
                             class="icon-bar"></span><span class="icon-bar"></span></button>
-                    <a class="navbar-brand" href="/student/index">游学</a>
+                    <a class="navbar-brand" href="/yxw/index">游学</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav" style="width: 65%">
                         <li class="active">
-                            <a href="/student/travel/index">行万里路</a>
+                            <a href="/yxw/travel/index">行万里路</a>
                         </li>
                         <li>
-                            <a href="/student/travel/read1.html">读万卷书</a>
+                            <a href="/yxw/travel/read1.html">读万卷书</a>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong

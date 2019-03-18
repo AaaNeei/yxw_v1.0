@@ -5,7 +5,7 @@ function ajaxGetSchoolByProvinceChange() {
     //alert(provinceNum);
     $.ajax({
         type: "GET",
-        url: "/student/register_getSchoolByProvinceNum.json",
+        url: "/yxw/register_getSchoolByProvinceNum.json",
         data: {provinceNum: provinceNum},
         dataType: "json",
         success: function (data) {

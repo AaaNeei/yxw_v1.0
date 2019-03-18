@@ -1,17 +1,18 @@
 //显示验证结果
 function show_validate_msg(ele, status, msg) {
+    var ele_msg = ele + "_msg";
     if ("success" == status) {
         // 让父容器变色
         $(ele).parent().addClass("has-success");
         // 给sapn赋值正确信息
-        $(ele + "_msg").css('color', 'green');
-        $(ele + "_msg").text(msg);
+        $(ele_msg).css('color', 'green');
+        $(ele_msg).text(msg);
     } else if ("error" == status) {
         // 让父容器变色
         $(ele).parent().addClass("has-error");
         // 给sapn赋值错误信息
-        $(ele + "_msg").css('color', 'red');
-        $(ele + "_msg").text(msg);
+        $(ele_msg).css('color', 'red');
+        $(ele_msg).text(msg);
     }
 }
 

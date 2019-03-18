@@ -22,7 +22,7 @@ import java.util.Set;
  * @throws:
  */
 @Controller
-@RequestMapping("/student")
+@RequestMapping("/yxw")
 public class StudentController {
 
     @Autowired
