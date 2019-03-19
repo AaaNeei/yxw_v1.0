@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yxw.tool.mapper.ProvinceMapper">
+   <!-- <resultMap id="ProfessionResultMap" type="com.yxw.tool.entity.School">
+        <id column="profession_id" property="professionId" jdbcType="INTEGER"/>
+        <result column="profession_name" property="professionName" jdbcType="VARCHAR"/>
+        <result column="profession_category" property="professionCategory" jdbcType="VARCHAR"/>
+        <result column="profession_num" property="professionNum" jdbcType="VARCHAR"/>
+
+    </resultMap>-->
+    <insert id="insert" parameterType="com.yxw.tool.entity.Province">
+        insert into yxw_province
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            province_id,
+            province_name,
+            province_num,
+            province_short,
+            country_id
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            null,
+            #{provinceName},
+            #{provinceNum},
+            #{provinceShort},
+            1
+        </trim>
+    </insert>
+
+</mapper>
